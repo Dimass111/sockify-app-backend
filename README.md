@@ -1,1 +1,0 @@
-# sockify-app-backend
