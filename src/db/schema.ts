@@ -30,3 +30,15 @@ export const users = mysqlTable("users", {
     .defaultNow()
     .notNull(),
 });
+
+export const categories = mysqlTable("categories", {
+  id: int("id").autoincrement().primaryKey(),
+
+  name: varchar("name", {
+    length: 100,
+  }).notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+});
