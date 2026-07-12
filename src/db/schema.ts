@@ -42,3 +42,25 @@ export const categories = mysqlTable("categories", {
     .defaultNow()
     .notNull(),
 });
+
+export const products = mysqlTable("products", {
+  id: int("id").autoincrement().primaryKey(),
+
+  categoryId: int("category_id")
+    .references(() => categories.id)
+    .notNull(),
+
+  name: varchar("name", {
+    length: 100,
+  }).notNull(),
+
+  price: int("price").notNull(),
+
+  stock: int("stock")
+    .default(0)
+    .notNull(),
+
+  createdAt: timestamp("created_at")
+    .defaultNow()
+    .notNull(),
+});
