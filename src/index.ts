@@ -1,10 +1,14 @@
+import "dotenv/config";
 import express from 'express';
 import { sql } from 'drizzle-orm';
 // import mahasiswaRoutes from './routes/mahasiswaRoutes.js';
 import { db } from './db/index.js';
+import routes from "./routes";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
 app.use(express.json());
+app.use("/api", routes);
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/health', async (_req, res) => {
@@ -16,7 +20,7 @@ app.get('/health', async (_req, res) => {
   }
 });
 
-// app.use('/mahasiswa', mahasiswaRoutes);
+app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log('Server berjalan di http://localhost:3000');

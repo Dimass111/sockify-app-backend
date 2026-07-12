@@ -8,6 +8,8 @@ import {
     deleteUser,
 } from "../controllers/user.controller";
 
+import { verifyToken } from "../middlewares/auth";
+
 const router = Router();
 
 router.get("/", getUsers);
