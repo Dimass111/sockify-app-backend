@@ -5,8 +5,10 @@ import { sql } from 'drizzle-orm';
 import { db } from './db/index.js';
 import routes from "./routes";
 import { errorHandler } from "./middlewares/errorHandler";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use("/api", routes);
 app.use(express.urlencoded({ extended: true }));

@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import { eq } from "drizzle-orm";
+import bcrypt from "bcrypt";
 
 import { db } from "../db";
 import { users } from "../db/schema";
+
 
 export const getUsers = async (
     req: Request,
@@ -44,17 +46,28 @@ export const createUser = async (
     req: Request,
     res: Response
 ) => {
-    const { name, email, password } = req.body;
+
+    const {
+        name,
+        email,
+        password,
+        role,
+    } = req.body;
+
+    // Tambahkan baris ini
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     await db.insert(users).values({
-    name,
-    email,
-    password,
+        name,
+        email,
+        password: hashedPassword,
+        role,
     });
 
     res.status(201).json({
-    message: "User berhasil ditambahkan",
+        message: "User berhasil ditambahkan",
     });
+
 };
 
 export const updateUser = async (
@@ -63,14 +76,22 @@ export const updateUser = async (
 ) => {
     const id = Number(req.params.id);
 
-    const { name, email, password } = req.body;
+    const {
+    name,
+    email,
+    password,
+    role,
+} = req.body;
 
     await db
     .update(users)
     .set({
-        name,
-        email,
-        password,
+
+    name,
+    email,
+    password,
+    role,
+
     })
     .where(eq(users.id, id));
 

@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1783848222189,
+      "tag": "0000_condemned_the_santerians",
+      "breakpoints": true
+    }
+  ]
+}

@@ -2,14 +2,27 @@ import { Request, Response } from "express";
 import { eq } from "drizzle-orm";
 
 import { db } from "../db";
-import { products } from "../db/schema";
+import { products, categories } from "../db/schema";
 
 export const getProducts = async (
   req: Request,
   res: Response
 ) => {
 
-  const data = await db.select().from(products);
+  const data = await db
+    .select({
+      id: products.id,
+      name: products.name,
+      price: products.price,
+      stock: products.stock,
+      categoryId: products.categoryId,
+      categoryName: categories.name,
+    })
+    .from(products)
+    .leftJoin(
+      categories,
+      eq(products.categoryId, categories.id)
+    );
 
   res.json(data);
 
